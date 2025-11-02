@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="master-provinsi-list.php" class="nav-link">
+                    <a href="M-Supplier-list.php" class="nav-link">
                         <i class="nav-icon bi bi-briefcase-fill"></i>
                         <p>Supplier</p>
                     </a>

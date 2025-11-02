@@ -2,10 +2,11 @@
 include '../config/class-master.php';
 $master = new MasterData();
 
-if($_GET['aksi'] == 'inputkategori'){
+$aksi = isset($_GET['aksi']) ? $_GET['aksi'] : '';
+
+if($aksi == 'inputkategori'){
     $dataKategori = [
-        'kode_kategori' => $_POST['kode'],
-        'nama_kategori' => $_POST['nama']
+        'nama' => $_POST['nama'] // key sesuai class-master.php
     ];
     $input = $master->inputKategori($dataKategori);
     if($input){
@@ -13,19 +14,20 @@ if($_GET['aksi'] == 'inputkategori'){
     } else {
         header("Location: ../master-kategori-input.php?status=failed");
     }
-} elseif($_GET['aksi'] == 'updatekategori'){
+
+} elseif($aksi == 'updatekategori'){
     $dataKategori = [
-        'id_kategori' => $_POST['id_kategori'],
-        'kode_kategori' => $_POST['kode_kategori'],
-        'nama_kategori' => $_POST['nama_kategori']
+        'id' => $_POST['id'],     // key sesuai class-master.php
+        'nama' => $_POST['nama']
     ];
     $update = $master->updateKategori($dataKategori);
     if($update){
         header("Location: ../master-kategori-list.php?status=editsuccess");
     } else {
-        header("Location: ../master-kategori-edit.php?id=".$dataKategori['id_kategori']."&status=failed");
+        header("Location: ../master-kategori-edit.php?id=".$dataKategori['id']."&status=failed");
     }
-} elseif($_GET['aksi'] == 'deletekategori'){
+
+} elseif($aksi == 'deletekategori'){
     $id = $_GET['id'];
     $delete = $master->deleteKategori($id);
     if($delete){

@@ -73,7 +73,7 @@ $dataKategori = $master->getKategori();
 										<thead>
 											<tr>
 												<th>No</th>
-												<th>Kode</th>
+
 												<th>Nama Kategori</th>
 												<th class="text-center">Aksi</th>
 											</tr>
@@ -82,19 +82,18 @@ $dataKategori = $master->getKategori();
 											<?php
 												if (count($dataKategori) == 0) {
 													echo '<tr class="align-middle">
-															<td colspan="4" class="text-center">Tidak ada kategori.</td>
+															<td colspan="3" class="text-center">Tidak ada kategori.</td>
 														</tr>';
 												} else {
 													foreach ($dataKategori as $index => $kategori) {
 														echo '<tr class="align-middle">
 																<td>'.($index + 1).'</td>
-																<td>'.$kategori['id'].'</td>
-																<td>'.$kategori['nama'].'</td>
+																<td>'.$kategori['nama_kategori'].'</td>
 																<td class="text-center">
-																	<button type="button" class="btn btn-sm btn-warning me-1" onclick="window.location.href=\'master-kategori-edit.php?id='.$kategori['id'].'\'">
+																	<button type="button" class="btn btn-sm btn-warning me-1" onclick="window.location.href=\'master-kategori-edit.php?id='.$kategori['id_kategori'].'\'">
 																		<i class="bi bi-pencil-fill"></i> Edit
 																	</button>
-																	<button type="button" class="btn btn-sm btn-danger" onclick="if(confirm(\'Yakin ingin menghapus kategori ini?\')){window.location.href=\'proses/proses-kategori.php?aksi=deletekategori&id='.$kategori['id'].'\'}">
+																	<button type="button" class="btn btn-sm btn-danger" onclick="if(confirm(\'Yakin ingin menghapus kategori ini?\')){window.location.href=\'proses/proses-kategori.php?aksi=deletekategori&id='.$kategori['id_kategori'].'\'}">
 																		<i class="bi bi-trash-fill"></i> Hapus
 																	</button>
 																</td>

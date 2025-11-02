@@ -14,12 +14,11 @@ class MasterData extends Database {
         $query = "SELECT * FROM tb_kategori";
         $result = $this->conn->query($query);
         $kategori = [];
-        if ($result->num_rows > 0) {
+        if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 $kategori[] = [
-                    'id' => $row['id_kategori'],
-                    'kode' => $row['kode_kategori'],
-                    'nama' => $row['nama_kategori']
+                    'id_kategori' => $row['id_kategori'],
+                    'nama_kategori' => $row['nama_kategori']
                 ];
             }
         }
@@ -28,32 +27,30 @@ class MasterData extends Database {
 
     // Input kategori baru
     public function inputKategori($data){
-        $kodeKategori = $data['kode_kategori'];
-        $namaKategori = $data['nama_kategori'];
-        $query = "INSERT INTO tb_kategori (kode_kategori, nama_kategori) VALUES (?, ?)";
+        $namaKategori = $data['nama'];
+        $query = "INSERT INTO tb_kategori (nama_kategori) VALUES (?)";
         $stmt = $this->conn->prepare($query);
         if(!$stmt) return false;
-        $stmt->bind_param("ss", $kodeKategori, $namaKategori);
+        $stmt->bind_param("s", $namaKategori);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
 
-    // Mendapatkan data kategori berdasarkan kode
-    public function getUpdateKategori($kode){
-        $query = "SELECT * FROM tb_kategori WHERE kode_kategori = ?";
+    // Mendapatkan data kategori berdasarkan id
+    public function getUpdateKategori($id){
+        $query = "SELECT * FROM tb_kategori WHERE id_kategori = ?";
         $stmt = $this->conn->prepare($query);
         if(!$stmt) return false;
-        $stmt->bind_param("s", $kode);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
         $kategori = null;
-        if($result->num_rows > 0){
+        if($result && $result->num_rows > 0){
             $row = $result->fetch_assoc();
             $kategori = [
-                'id' => $row['id_kategori'],
-                'kode' => $row['kode_kategori'],
-                'nama' => $row['nama_kategori']
+                'id_kategori' => $row['id_kategori'],
+                'nama_kategori' => $row['nama_kategori']
             ];
         }
         $stmt->close();
@@ -62,103 +59,116 @@ class MasterData extends Database {
 
     // Update data kategori
     public function updateKategori($data){
-        $kodeKategori = $data['kode'];
-        $namaKategori = $data['nama'];
-        $query = "UPDATE tb_kategori SET nama_kategori = ? WHERE kode_kategori = ?";
+        $idKategori = $data['id_kategori'];       // integer
+        $namaKategori = $data['nama_kategori'];   // string
+        $query = "UPDATE tb_kategori SET nama_kategori = ? WHERE id_kategori = ?";
         $stmt = $this->conn->prepare($query);
         if(!$stmt) return false;
-        $stmt->bind_param("ss", $namaKategori, $kodeKategori);
+        $stmt->bind_param("si", $namaKategori, $idKategori);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
 
     // Hapus kategori
-    public function deleteKategori($kode){
-        $query = "DELETE FROM tb_kategori WHERE kode_kategori = ?";
+    public function deleteKategori($id){
+        $query = "DELETE FROM tb_kategori WHERE id_kategori = ?";
         $stmt = $this->conn->prepare($query);
         if(!$stmt) return false;
-        $stmt->bind_param("s", $kode);
+        $stmt->bind_param("i", $id);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
+    
 
     // ===========================
     // SUPPLIER
     // ===========================
 
-    // Mendapatkan semua supplier
-    public function getSupplier(){
-        $query = "SELECT * FROM tb_supplier";
+       // Ambil semua supplier
+    public function getSupplier() {
+        $query = "SELECT id_supplier, nama_supplier, kontak_sup, alamat_sup FROM tb_supplier";
         $result = $this->conn->query($query);
-        $supplier = [];
-        if ($result->num_rows > 0) {
+        $suppliers = [];
+
+        if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $supplier[] = [
+                $suppliers[] = [
                     'id' => $row['id_supplier'],
-                    'nama' => $row['nama_supplier']
+                    'nama' => $row['nama_supplier'],
+                    'kontak' => $row['kontak_sup'],
+                    'alamat' => $row['alamat_sup']
                 ];
             }
         }
+
+        return $suppliers;
+    }
+
+    // Ambil supplier berdasarkan ID
+    public function getUpdateSupplier($id) {
+        $query = "SELECT id_supplier, nama_supplier, kontak_sup, alamat_sup FROM tb_supplier WHERE id_supplier = ?";
+        $stmt = $this->conn->prepare($query);
+        if (!$stmt) return false;
+
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $supplier = null;
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $supplier = [
+                'id' => $row['id_supplier'],
+                'nama' => $row['nama_supplier'],
+                'kontak' => $row['kontak_sup'],
+                'alamat' => $row['alamat_sup']
+            ];
+        }
+
+        $stmt->close();
         return $supplier;
     }
 
-    // Input supplier baru
-    public function inputSupplier($data){
-        $namaSupplier = $data['nama'];
-        $query = "INSERT INTO tb_supplier (nama_supplier) VALUES (?)";
+    // Tambah supplier
+    public function addSupplier($nama, $kontak, $alamat) {
+        $query = "INSERT INTO tb_supplier (nama_supplier, kontak_sup, alamat_sup) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($query);
-        if(!$stmt) return false;
-        $stmt->bind_param("s", $namaSupplier);
+        if (!$stmt) return false;
+
+        $stmt->bind_param("sss", $nama, $kontak, $alamat);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
 
-    // Mendapatkan data supplier berdasarkan id
-    public function getUpdateSupplier($id){
-        $query = "SELECT * FROM tb_supplier WHERE id_supplier = ?";
+    // Update supplier
+    public function editSupplier($id, $nama, $kontak, $alamat) {
+        $query = "UPDATE tb_supplier SET nama_supplier=?, kontak_sup=?, alamat_sup=? WHERE id_supplier=?";
         $stmt = $this->conn->prepare($query);
-        if(!$stmt) return false;
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $supplier = null;
-        if($result->num_rows > 0){
-            $row = $result->fetch_assoc();
-            $supplier = [
-                'id' => $row['id_supplier'],
-                'nama' => $row['nama_supplier']
-            ];
-        }
-        $stmt->close();
-        return $supplier;
-    }
+        if (!$stmt) return false;
 
-    // Update data supplier
-    public function updateSupplier($data){
-        $idSupplier = $data['id'];
-        $namaSupplier = $data['nama'];
-        $query = "UPDATE tb_supplier SET nama_supplier = ? WHERE id_supplier = ?";
-        $stmt = $this->conn->prepare($query);
-        if(!$stmt) return false;
-        $stmt->bind_param("si", $namaSupplier, $idSupplier);
+        $stmt->bind_param("sssi", $nama, $kontak, $alamat, $id);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
 
     // Hapus supplier
-    public function deleteSupplier($id){
-        $query = "DELETE FROM tb_supplier WHERE id_supplier = ?";
+    public function deleteSupplier($id) {
+        $query = "DELETE FROM tb_supplier WHERE id_supplier=?";
         $stmt = $this->conn->prepare($query);
-        if(!$stmt) return false;
+        if (!$stmt) return false;
+
         $stmt->bind_param("i", $id);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
 
+    public function __destruct() {
+        $this->conn->close();
+    }
 }
 ?>

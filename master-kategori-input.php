@@ -59,10 +59,6 @@ if(isset($_GET['status'])){
 									</div>
                                     <form action="proses/proses-kategori.php?aksi=inputkategori" method="POST">
 									    <div class="card-body">
-                                            <div class="mb-3">
-                                                <label for="nama" class="form-label">Kode Kategori</label>
-                                                <input type="text" class="form-control" id="kode" name="kode" placeholder="Masukkan Kode Program Studi" required>
-                                            </div>
 											<div class="mb-3">
 												<label for="nama" class="form-label">Nama Kategori</label>
 												<input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Program Studi" required>
