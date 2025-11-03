@@ -53,12 +53,7 @@ $supplierList = $master->getSupplier();
 
                                 <form action="proses/proses-input.php" method="POST">
                                     <div class="card-body">
-                                        <!-- Kode Barang -->
-                                        <div class="mb-3">
-                                            <label for="kode" class="form-label">Kode Barang</label>
-                                            <input type="number" class="form-control" id="kode" name="kode" placeholder="Masukkan kode barang" required>
-                                        </div>
-
+                                        
                                         <!-- Nama Barang -->
                                         <div class="mb-3">
                                             <label for="nama" class="form-label">Nama Barang</label>
@@ -72,7 +67,7 @@ $supplierList = $master->getSupplier();
                                                 <option value="" selected disabled>Pilih Kategori</option>
                                                 <?php 
                                                 foreach ($kategoriList as $kategori){
-                                                    echo '<option value="'.$kategori['id'].'">'.$kategori['nama'].'</option>';
+                                                    echo '<option value="'.$kategori['id_kategori'].'">'.$kategori['nama_kategori'].'</option>';
                                                 }
                                                 ?>
                                             </select>
@@ -91,11 +86,31 @@ $supplierList = $master->getSupplier();
                                             </select>
                                         </div>
 
-                                        <!-- Nomor Telepon -->
+                                        <!-- Harga Beli -->
                                         <div class="mb-3">
-                                            <label for="telp" class="form-label">Nomor Telepon</label>
-                                            <input type="tel" class="form-control" id="telp" name="telp" placeholder="Masukkan nomor telepon/HP" pattern="[0-9+\-\s()]{6,20}" required>
+                                            <label for="harga_beli" class="form-label">Harga Beli</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Rp</span>
+                                                <input type="number" class="form-control" id="harga_beli" name="harga_beli" placeholder="0" min="0" step="100" required>
+                                            </div>
                                         </div>
+
+                                        <!-- Harga Jual -->
+                                        <div class="mb-3">
+                                            <label for="harga_jual" class="form-label">Harga Jual</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Rp</span>
+                                                <input type="number" class="form-control" id="harga_jual" name="harga_jual" placeholder="0" min="0" step="100" required>
+                                            </div>
+                                        </div>
+
+                                        <!-- Stock -->
+                                        <div class="mb-3">
+                                            <label for="stock" class="form-label">Stock Barang</label>
+                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Masukkan Stock Barang" min="0" step="1" required>
+                                        </div>
+
+
                                     </div>
 
                                     <div class="card-footer">

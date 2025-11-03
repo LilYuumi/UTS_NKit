@@ -1,174 +1,143 @@
 <?php 
-
 include_once 'config/class-master.php';
-include_once 'config/class-mahasiswa.php';
+include_once 'config/class-barang.php';
 $master = new MasterData();
-$mahasiswa = new Mahasiswa();
-// Mengambil daftar program studi, provinsi, dan status mahasiswa
-$prodiList = $master->getProdi();
-// Mengambil daftar provinsi
-$provinsiList = $master->getProvinsi();
-// Mengambil daftar status mahasiswa
-$statusList = $master->getStatus();
-// Mengambil data mahasiswa yang akan diedit berdasarkan id dari parameter GET
-$dataMahasiswa = $mahasiswa->getUpdateMahasiswa($_GET['id']);
-if(isset($_GET['status'])){
-    if($_GET['status'] == 'failed'){
-        echo "<script>alert('Gagal mengubah data mahasiswa. Silakan coba lagi.');</script>";
-    }
+$barang = new Barang();
+
+// Ambil daftar kategori dan supplier
+$kategoriList = $master->getKategori();
+$supplierList = $master->getSupplier();
+
+// Ambil data barang berdasarkan ID
+$dataBarang = $barang->getUpdateBarang($_GET['id']);
+
+if(isset($_GET['status']) && $_GET['status'] == 'failed'){
+    echo "<script>alert('Gagal mengubah data barang. Silakan coba lagi.');</script>";
 }
+
 ?>
 <!doctype html>
 <html lang="en">
-	<head>
-		<?php include 'template/header.php'; ?>
-	</head>
+<head>
+    <?php include 'template/header.php'; ?>
+</head>
+<body class="layout-fixed fixed-header fixed-footer sidebar-expand-lg sidebar-open bg-body-tertiary">
+    <div class="app-wrapper">
+        <?php include 'template/navbar.php'; ?>
+        <?php include 'template/sidebar.php'; ?>
 
-	<body class="layout-fixed fixed-header fixed-footer sidebar-expand-lg sidebar-open bg-body-tertiary">
+        <main class="app-main">
+            <div class="app-content-header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3 class="mb-0">Edit Barang</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-end">
+                                <li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Edit Barang</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-		<div class="app-wrapper">
+            <div class="app-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Formulir Barang</h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
+                                            <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                                            <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
-			<?php include 'template/navbar.php'; ?>
+                                <form action="proses/proses-edit.php" method="POST">
+                                    <div class="card-body">
+                                        <input type="hidden" name="id" value="<?php echo $dataBarang['id']; ?>">
 
-			<?php include 'template/sidebar.php'; ?>
+                                        <!-- Nama Barang -->
+                                        <div class="mb-3">
+                                            <label for="nama" class="form-label">Nama Barang</label>
+                                            <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $dataBarang['nama_barang']; ?>" required>
+                                        </div>
 
-			<main class="app-main">
+                                        <!-- Kategori -->
+                                        <div class="mb-3">
+                                            <label for="kategori" class="form-label">Kategori Barang</label>
+                                            <select class="form-select" id="kategori" name="kategori" required>
+                                                <option value="" disabled>Pilih Kategori</option>
+                                                <?php 
+                                                foreach ($kategoriList as $kategori){
+                                                    $selected = ($dataBarang['id_kategori'] == $kategori['id_kategori']) ? 'selected' : '';
+                                                    echo '<option value="'.$kategori['id_kategori'].'" '.$selected.'>'.$kategori['nama_kategori'].'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
 
-				<div class="app-content-header">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-sm-6">
-								<h3 class="mb-0">Edit Mahasiswa</h3>
-							</div>
-							<div class="col-sm-6">
-								<ol class="breadcrumb float-sm-end">
-									<li class="breadcrumb-item"><a href="index.php">Beranda</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Edit Data</li>
-								</ol>
-							</div>
-						</div>
-					</div>
-				</div>
+                                        <!-- Supplier -->
+                                        <div class="mb-3">
+                                            <label for="supplier" class="form-label">Supplier</label>
+                                            <select class="form-select" id="supplier" name="supplier" required>
+                                                <option value="" disabled>Pilih Supplier</option>
+                                                <?php 
+                                                foreach ($supplierList as $supplier){
+                                                    $selected = ($dataBarang['id_supplier'] == $supplier['id']) ? 'selected' : '';
+                                                    echo '<option value="'.$supplier['id'].'" '.$selected.'>'.$supplier['nama'].'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
 
-				<div class="app-content">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-12">
-								<div class="card">
-									<div class="card-header">
-										<h3 class="card-title">Formulir Mahasiswa</h3>
-										<div class="card-tools">
-											<button type="button" class="btn btn-tool" data-lte-toggle="card-collapse" title="Collapse">
-												<i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-												<i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
-											</button>
-											<button type="button" class="btn btn-tool" data-lte-toggle="card-remove" title="Remove">
-												<i class="bi bi-x-lg"></i>
-											</button>
-										</div>
-									</div>
-                                    <form action="proses/proses-edit.php" method="POST">
-									    <div class="card-body">
-                                            <input type="hidden" name="id" value="<?php echo $dataMahasiswa['id']; ?>">
-                                            <div class="mb-3">
-                                                <label for="nim" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
-                                                <input type="number" class="form-control" id="nim" name="nim" placeholder="Masukkan NIM Mahasiswa" value="<?php echo $dataMahasiswa['nim']; ?>" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="nama" class="form-label">Nama Lengkap</label>
-                                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Lengkap Mahasiswa" value="<?php echo $dataMahasiswa['nama']; ?>" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="prodi" class="form-label">Program Studi</label>
-                                                <select class="form-select" id="prodi" name="prodi" required>
-                                                    <option value="" selected disabled>Pilih Program Studi</option>
-                                                    <?php 
-                                                    // Iterasi daftar program studi dan menandai yang sesuai dengan data mahasiswa yang dipilih
-                                                    foreach ($prodiList as $prodi){
-                                                        // Menginisialisasi variabel kosong untuk menandai opsi yang dipilih
-                                                        $selectedProdi = "";
-                                                        // Mengecek apakah program studi saat ini sesuai dengan data mahasiswa
-                                                        if($dataMahasiswa['prodi'] == $prodi['id']){
-                                                            // Jika sesuai, tandai sebagai opsi yang dipilih
-                                                            $selectedProdi = "selected";
-                                                        }
-                                                        // Menampilkan opsi program studi dengan penanda yang sesuai
-                                                        echo '<option value="'.$prodi['id'].'" '.$selectedProdi.'>'.$prodi['nama'].'</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="alamat" class="form-label">Alamat</label>
-                                                <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Masukkan Alamat Lengkap Sesuai KTP" required><?php echo $dataMahasiswa['alamat']; ?></textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="provinsi" class="form-label">Provinsi</label>
-                                                <select class="form-select" id="provinsi" name="provinsi" required>
-                                                    <option value="" selected disabled>Pilih Provinsi</option>
-                                                    <?php
-                                                    // Iterasi daftar provinsi dan menandai yang sesuai dengan data mahasiswa yang dipilih
-                                                    foreach ($provinsiList as $provinsi){
-                                                        // Menginisialisasi variabel kosong untuk menandai opsi yang dipilih
-                                                        $selectedProvinsi = "";
-                                                        // Mengecek apakah provinsi saat ini sesuai dengan data mahasiswa
-                                                        if($dataMahasiswa['provinsi'] == $provinsi['id']){
-                                                            // Jika sesuai, tandai sebagai opsi yang dipilih
-                                                            $selectedProvinsi = "selected";
-                                                        }
-                                                        // Menampilkan opsi provinsi dengan penanda yang sesuai
-                                                        echo '<option value="'.$provinsi['id'].'" '.$selectedProvinsi.'>'.$provinsi['nama'].'</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email Valid dan Benar" value="<?php echo $dataMahasiswa['email']; ?>" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="telp" class="form-label">Nomor Telepon</label>
-                                                <input type="tel" class="form-control" id="telp" name="telp" placeholder="Masukkan Nomor Telpon/HP" value="<?php echo $dataMahasiswa['telp']; ?>" pattern="[0-9+\-\s()]{6,20}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="status" class="form-label">Status</label>
-                                                <select class="form-select" id="status" name="status" required>
-                                                    <option value="" selected disabled>Pilih Status</option>
-                                                    <?php 
-                                                    // Iterasi daftar status mahasiswa dan menandai yang sesuai dengan data mahasiswa yang dipilih
-                                                    foreach ($statusList as $status){
-                                                        // Menginisialisasi variabel kosong untuk menandai opsi yang dipilih
-                                                        $selectedStatus = "";
-                                                        // Mengecek apakah status saat ini sesuai dengan data mahasiswa
-                                                        if($dataMahasiswa['status'] == $status['id']){
-                                                            // Jika sesuai, tandai sebagai opsi yang dipilih
-                                                            $selectedStatus = "selected";
-                                                        }
-                                                        // Menampilkan opsi status dengan penanda yang sesuai
-                                                        echo '<option value="'.$status['id'].'" '.$selectedStatus.'>'.$status['nama'].'</option>';
-                                                    }
-                                                    ?>
-                                                </select>
+                                        <!-- Harga Beli -->
+                                        <div class="mb-3">
+                                            <label for="harga_beli" class="form-label">Harga Beli</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Rp</span>
+                                                <input type="number" class="form-control" id="harga_beli" name="harga_beli" value="<?php echo $dataBarang['harga_beli']; ?>" min="0" step="100" required>
                                             </div>
                                         </div>
-									    <div class="card-footer">
-                                            <button type="button" class="btn btn-danger me-2 float-start" onclick="window.location.href='data-list.php'">Batal</button>
-                                            <button type="submit" class="btn btn-warning float-end">Update Data</button>
+
+                                        <!-- Harga Jual -->
+                                        <div class="mb-3">
+                                            <label for="harga_jual" class="form-label">Harga Jual</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">Rp</span>
+                                                <input type="number" class="form-control" id="harga_jual" name="harga_jual" value="<?php echo $dataBarang['harga_jual']; ?>" min="0" step="100" required>
+                                            </div>
                                         </div>
-                                    </form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 
-			</main>
+                                        <!-- Stock -->
+                                        <div class="mb-3">
+                                            <label for="stock" class="form-label">Stock Barang</label>
+                                            <input type="number" class="form-control" id="stock" name="stock" value="<?php echo $dataBarang['stock']; ?>" min="0" step="1" required>
+                                        </div>
+                                    </div>
 
-			<?php include 'template/footer.php'; ?>
+                                    <div class="card-footer">
+                                        <button type="button" class="btn btn-danger me-2 float-start" onclick="window.location.href='data-list.php'">Batal</button>
+                                        <button type="submit" class="btn btn-warning float-end">Update Data</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
 
-		</div>
-		
-		<?php include 'template/script.php'; ?>
-
-	</body>
+        <?php include 'template/footer.php'; ?>
+    </div>
+    <?php include 'template/script.php'; ?>
+</body>
 </html>

@@ -6,7 +6,7 @@ $aksi = isset($_GET['aksi']) ? $_GET['aksi'] : '';
 
 if($aksi == 'inputkategori'){
     $dataKategori = [
-        'nama' => $_POST['nama'] // key sesuai class-master.php
+        'nama' => $_POST['nama']
     ];
     $input = $master->inputKategori($dataKategori);
     if($input){
@@ -16,15 +16,16 @@ if($aksi == 'inputkategori'){
     }
 
 } elseif($aksi == 'updatekategori'){
-    $dataKategori = [
-        'id' => $_POST['id'],     // key sesuai class-master.php
-        'nama' => $_POST['nama']
+        $dataKategori = [
+        'id_kategori' => $_POST['id_kategori'],     // sesuai class-master
+        'nama_kategori' => $_POST['nama_kategori']  // sesuai class-master
     ];
     $update = $master->updateKategori($dataKategori);
+
     if($update){
         header("Location: ../master-kategori-list.php?status=editsuccess");
     } else {
-        header("Location: ../master-kategori-edit.php?id=".$dataKategori['id']."&status=failed");
+        header("Location: ../master-kategori-edit.php?id=".$dataKategori['id_kategori']."&status=failed");
     }
 
 } elseif($aksi == 'deletekategori'){

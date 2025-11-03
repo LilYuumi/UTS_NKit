@@ -2,19 +2,16 @@
 include_once 'config/class-master.php';
 $master = new MasterData();
 
-// Cek apakah parameter id ada
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 if($id <= 0){
     die("ID Kategori tidak ditemukan.");
 }
 
-// Ambil data kategori
 $dataKategori = $master->getUpdateKategori($id);
 if(!$dataKategori){
     die("Data Kategori tidak ditemukan.");
 }
 
-// Alert jika gagal update
 if(isset($_GET['status']) && $_GET['status'] == 'failed'){
     echo "<script>alert('Gagal mengubah Kategori. Silakan coba lagi.');</script>";
 }
@@ -57,10 +54,10 @@ if(isset($_GET['status']) && $_GET['status'] == 'failed'){
                             </div>
                             <form action="proses/proses-kategori.php?aksi=updatekategori" method="POST">
                                 <div class="card-body">
-                                    <input type="hidden" name="id" value="<?php echo $dataKategori['id_kategori']; ?>">
+                                    <input type="hidden" name="id_kategori" value="<?php echo $dataKategori['id_kategori']; ?>">
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama Kategori</label>
-                                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Kategori" value="<?php echo $dataKategori['nama_kategori']; ?>" required>
+                                        <input type="text" class="form-control" id="nama" name="nama_kategori" placeholder="Masukkan Nama Kategori" value="<?php echo $dataKategori['nama_kategori']; ?>" required>
                                     </div>
                                 </div>
                                 <div class="card-footer">
