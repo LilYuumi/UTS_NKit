@@ -1,77 +1,87 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               5.7.33 - MySQL Community Server (GPL)
--- Server OS:                    Win64
--- HeidiSQL Version:             12.10.0.7000
--- --------------------------------------------------------
+/*
+SQLyog Ultimate v12.5.1 (64 bit)
+MySQL - 8.0.30 : Database - db_simplecrud
+*********************************************************************
+*/
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_simplecrud` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
-
--- Dumping database structure for db_simplecrud
-CREATE DATABASE IF NOT EXISTS `db_simplecrud` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 USE `db_simplecrud`;
 
--- Dumping structure for table db_simplecrud.tb_mahasiswa
-CREATE TABLE IF NOT EXISTS `tb_mahasiswa` (
-  `id_mhs` int(11) NOT NULL AUTO_INCREMENT,
-  `nim_mhs` char(12) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `nama_mhs` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `prodi_mhs` char(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `alamat` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `provinsi` mediumint(3) NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telp` char(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `status_mhs` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id_mhs`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*Table structure for table `tb_barang` */
 
--- Dumping data for table db_simplecrud.tb_mahasiswa: ~0 rows (approximately)
+DROP TABLE IF EXISTS `tb_barang`;
 
--- Dumping structure for table db_simplecrud.tb_prodi
-CREATE TABLE IF NOT EXISTS `tb_prodi` (
-  `kode_prodi` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_prodi` char(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`kode_prodi`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for table db_simplecrud.tb_prodi: ~9 rows (approximately)
-INSERT INTO `tb_prodi` (`kode_prodi`, `nama_prodi`) VALUES
-	('ARS', 'Arsitek'),
-	('BD', 'Bisnis Digital'),
-	('DI', 'Desain Interior'),
-	('DKV', 'Desain Komunikasi Visual'),
-	('DM', 'Desain Mode'),
-	('MBD', 'Magister Bisnis Digital'),
-	('MDS', 'Magister Desain'),
-	('MR', 'Manajemen Ritel'),
-	('STI', 'Sistem dan Teknologi Informasi');
-
--- Dumping structure for table db_simplecrud.tb_provinsi
-CREATE TABLE IF NOT EXISTS `tb_provinsi` (
-  `id_provinsi` smallint(3) NOT NULL AUTO_INCREMENT,
-  `nama_provinsi` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_provinsi`)
+CREATE TABLE `tb_barang` (
+  `id_barang` int NOT NULL AUTO_INCREMENT,
+  `nama_barang` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `id_kategori` int NOT NULL,
+  `id_supplier` int NOT NULL,
+  `harga_beli` int NOT NULL,
+  `harga_jual` int DEFAULT NULL,
+  `stock` int NOT NULL,
+  PRIMARY KEY (`id_barang`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table db_simplecrud.tb_provinsi: ~6 rows (approximately)
-INSERT INTO `tb_provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
-	(1, 'Bali'),
-	(2, 'Nusa Tenggara Timur'),
-	(3, 'Nusa Tenggara Barat'),
-	(4, 'Jawa Timur'),
-	(5, 'Jawa Tengah'),
-	(6, 'Jawa Barat');
+/*Data for the table `tb_barang` */
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+insert  into `tb_barang`(`id_barang`,`nama_barang`,`id_kategori`,`id_supplier`,`harga_beli`,`harga_jual`,`stock`) values 
+(1,'EG 1/144 RX-78-2 Gundam',1,1,123000,150000,26),
+(2,'EG 1/144 Strike Gundam',1,1,130000,150000,21),
+(3,'HG 1/144 XGF-02 Gundam Lfrith',2,2,230000,260000,21),
+(4,'HG 1/144 MDX-0003 Gundam Schwarzette',2,2,235000,265000,25),
+(5,'RG 1/144 MSN-04 Sazabi',3,1,800000,900000,12),
+(6,'MG 1/100 RX-0 Unicorn Gundam (Ver. Ka)',4,1,2000000,2150000,5);
+
+/*Table structure for table `tb_kategori` */
+
+DROP TABLE IF EXISTS `tb_kategori`;
+
+CREATE TABLE `tb_kategori` (
+  `id_kategori` int NOT NULL AUTO_INCREMENT,
+  `nama_kategori` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id_kategori`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `tb_kategori` */
+
+insert  into `tb_kategori`(`id_kategori`,`nama_kategori`) values 
+(1,'EG (Entry Grade)'),
+(2,'HG (HIgh Grade)'),
+(3,'RG (Real Grade)'),
+(4,'MG (Master Grade)'),
+(5,'PG (Perfect Grade)'),
+(6,'SD (Super Deformed)');
+
+/*Table structure for table `tb_supplier` */
+
+DROP TABLE IF EXISTS `tb_supplier`;
+
+CREATE TABLE `tb_supplier` (
+  `id_supplier` int NOT NULL AUTO_INCREMENT,
+  `nama_supplier` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kontak_sup` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat_sup` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id_supplier`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `tb_supplier` */
+
+insert  into `tb_supplier`(`id_supplier`,`nama_supplier`,`kontak_sup`,`alamat_sup`) values 
+(1,'Bandai','08123456789','Tokyo, Japan'),
+(2,'Kotobukiya','0897654321','Tokyo, Japan'),
+(3,'Banpresto','08989896767','Osaka, Japan'),
+(4,'Takara Tommy ','0811223344','Tokyo, Japan');
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
