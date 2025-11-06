@@ -1,94 +1,97 @@
-body {
-  background-color: #FFFFFF !important;
+/* Sidebar Background & Divider */
+.bg-body-secondary {
+  background-color: #0f172a !important; /* Hitam Kebiruan ala armor Gundam */
+  border-right: 2px solid #0057B7; /* Aksen Biru */
 }
 
-.element.style {
-  background-color: #0057B7 !important;
+/* Sidebar Header Text */
+.nav-header,
+div.sidebar-brand {
+  color: #FFFFFF !important;
 }
 
-.header, .topbar {
-  background-color: #FFFFFF !important;
+/* Card Header */
+div.card-header {
+  background-color: #0057B7; /* Biru Gundam */
+  color: #FFFFFF !important;
+  border-bottom: 3px solid #E60026; /* Strip Merah seperti V-fin */
+}
+
+/* Card Body Text */
+div.card-body {
+  color: #000000;
+}
+
+/* === Button Re-Color Gundam === */
+
+/* Tombol Biru - Primary Action (Tambah Data Barang) */
+.btn.btn-primary.btn-lg {
+  background: linear-gradient(135deg, #0057B7, #003D80);
+  color: #FFFFFF !important;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 4px 10px rgba(0, 87, 183, 0.4);
+}
+.btn.btn-primary.btn-lg:hover {
+  background: linear-gradient(135deg, #003D80, #002B5D);
+  transform: translateY(-2px);
+}
+
+/* Tombol Merah - Danger / Action penting */
+.btn.btn-danger {
+  background: linear-gradient(135deg, #E60026, #B0001B);
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF !important;
+}
+.btn.btn-danger:hover {
+  background: linear-gradient(135deg, #B0001B, #7A0012);
+}
+
+/* Tombol Kuning - Search / Alert */
+.btn.btn-warning.btn-lg {
+  background: linear-gradient(135deg, #FFD700, #C7AB00);
+  border: 2px solid #000000;
   color: #000000 !important;
+  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4);
+}
+.btn.btn-warning.btn-lg:hover {
+  background: linear-gradient(135deg, #C7AB00, #9C8900);
 }
 
-.sidebar .menu-item.active {
-  background-color: #E60026 !important;
-  color: #FFD700 !important;
+/* === Sidebar Nav Link === */
+.nav-link {
+  color: #d1d5db;
+  transition: all 0.3s ease;
 }
-
-.sidebar .menu-item:hover {
-  background-color: #FFD700 !important;
-}
-
-.sidebar .icon {
+.nav-link:hover {
+  background: #E60026; /* Hover merah Gundam */
   color: #FFFFFF !important;
+  transform: translateX(5px);
 }
 
-.sidebar .menu-text {
+/* Nav Active - Biru */
+.nav-link.active {
+  background: #0057B7 !important;
   color: #FFFFFF !important;
+  font-weight: 600;
+  border-left: 4px solid #FFD700;
 }
 
-.button.add-data, .btn-add {
-  background-color: #0057B7 !important;
-  color: #FFFFFF !important;
+/* === Table Styling Gundam === */
+table {
+  border: 2px solid #000000;
 }
 
-.button.view-list, .btn-view {
-  background-color: #87CEEB !important;
-  color: #FFFFFF !important;
+table thead {
+  background: #0057B7;
+  color: #FFFFFF;
+  border-bottom: 3px solid #E60026;
 }
 
-.button.search, .btn-search {
-  background-color: #FFD700 !important;
-  color: #FFFFFF !important;
+table tbody tr:nth-child(even) {
+  background: #f3f4f6;
 }
 
-button:hover, .button:hover {
-  border: 2px solid #FFD700 !important;
-  box-shadow: 0 0 5px #FFD700 !important;
-}
-
-.table thead, .list-header {
-  background-color: #0057B7 !important;
-  color: #FFFFFF !important;
-}
-
-.table, .list {
-  border: 1px solid #000000 !important;
-}
-
-.table tbody tr:nth-child(even), .list .item:nth-child(even) {
-  background-color: #FFFFFF !important;
-}
-
-.table tbody tr:nth-child(odd), .list .item:nth-child(odd) {
-  background-color: #F0F0F0 !important;
-}
-
-.table tbody tr:hover, .list .item:hover {
-  background-color: rgba(255, 215, 0, 0.2) !important;
-}
-
-.card, .panel {
-  background-color: #FFFFFF !important;
-  border: 1px solid #000000 !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
-}
-
-.card .card-header, .panel .panel-header {
-  background-color: #0057B7 !important;
-  color: #FFFFFF !important;
-}
-
-h1, h2 {
-  color: #000000 !important;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    background-color: #0057B7 !important;
-  }
-  .table, .list {
-    font-size: 14px !important;
-  }
+table tbody tr:hover {
+  background: rgba(255, 215, 0, 0.3);
+  cursor: pointer;
 }
