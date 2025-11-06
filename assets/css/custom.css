@@ -1,115 +1,94 @@
-
 body {
-  background-color: #FFFFFF !important; /* White main background. */
+  background-color: #FFFFFF !important;
 }
 
 .element.style {
-  background-color: #0057B7 !important; /* Dark blue for sidebar (or use #000000 for black if preferred). */
+  background-color: #0057B7 !important;
 }
 
 .header, .topbar {
-  background-color: #FFFFFF !important; /* White header/topbar. */
-  color: #000000 !important; /* Black text, or #0057B7 for dark blue. */
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
 }
 
-/* 2. Sidebar Menu */
-/* Active menu: Red highlight. Hover: Yellow. Icons: White. Text: White, except active (yellow or red). */
 .sidebar .menu-item.active {
-  background-color: #E60026 !important; /* Red for active menu. */
-  color: #FFD700 !important; /* Yellow text for active (or #E60026 for red). */
+  background-color: #E60026 !important;
+  color: #FFD700 !important;
 }
 
 .sidebar .menu-item:hover {
-  background-color: #FFD700 !important; /* Yellow hover. */
+  background-color: #FFD700 !important;
 }
 
 .sidebar .icon {
-  color: #FFFFFF !important; /* White icons. */
+  color: #FFFFFF !important;
 }
 
 .sidebar .menu-text {
-  color: #FFFFFF !important; /* White text. */
+  color: #FFFFFF !important;
 }
 
-/* 3. Buttons */
-/* Specific buttons: Tambah Data Barang (blue), Lihat Daftar Barang (light blue or yellow), Cari Barang (yellow). Text: White. Hover: Glow/border in yellow or red. */
 .button.add-data, .btn-add {
-  background-color: #0057B7 !important; /* Blue for Tambah Data Barang. */
-  color: #FFFFFF !important; /* White text. */
+  background-color: #0057B7 !important;
+  color: #FFFFFF !important;
 }
 
 .button.view-list, .btn-view {
-  background-color: #87CEEB !important; /* Light blue for Lihat Daftar Barang (or #FFD700 for yellow in strict Gundam). */
-  color: #FFFFFF !important; /* White text. */
+  background-color: #87CEEB !important;
+  color: #FFFFFF !important;
 }
 
 .button.search, .btn-search {
-  background-color: #FFD700 !important; /* Yellow for Cari Barang. */
-  color: #FFFFFF !important; /* White text. */
+  background-color: #FFD700 !important;
+  color: #FFFFFF !important;
 }
 
 button:hover, .button:hover {
-  border: 2px solid #FFD700 !important; /* Yellow border on hover (or #E60026 for red). */
-  box-shadow: 0 0 5px #FFD700 !important; /* Subtle glow for futuristic effect. */
+  border: 2px solid #FFD700 !important;
+  box-shadow: 0 0 5px #FFD700 !important;
 }
 
-/* 4. Tabel / List Data */
-/* Header tabel: Blue with white text. Border: Thin black. Zebra-stripe: White and light gray/light blue. Hover: Light yellow or transparent red. */
 .table thead, .list-header {
-  background-color: #0057B7 !important; /* Blue header. */
-  color: #FFFFFF !important; /* White text. */
+  background-color: #0057B7 !important;
+  color: #FFFFFF !important;
 }
 
 .table, .list {
-  border: 1px solid #000000 !important; /* Thin black border. */
+  border: 1px solid #000000 !important;
 }
 
 .table tbody tr:nth-child(even), .list .item:nth-child(even) {
-  background-color: #FFFFFF !important; /* White for even rows. */
+  background-color: #FFFFFF !important;
 }
 
 .table tbody tr:nth-child(odd), .list .item:nth-child(odd) {
-  background-color: #F0F0F0 !important; /* Light gray (or #E6F3FF for very light blue). */
+  background-color: #F0F0F0 !important;
 }
 
 .table tbody tr:hover, .list .item:hover {
-  background-color: rgba(255, 215, 0, 0.2) !important; /* Light yellow hover (or rgba(230, 0, 38, 0.2) for transparent red). */
+  background-color: rgba(255, 215, 0, 0.2) !important;
 }
 
-/* 5. Card / Panel */
-/* Background: White, thin black border, light shadow. Header: Blue or red with white text. */
 .card, .panel {
-  background-color: #FFFFFF !important; /* White background. */
-  border: 1px solid #000000 !important; /* Thin black border. */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important; /* Light shadow for depth. */
+  background-color: #FFFFFF !important;
+  border: 1px solid #000000 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
 
 .card .card-header, .panel .panel-header {
-  background-color: #0057B7 !important; /* Blue header (or #E60026 for red). */
-  color: #FFFFFF !important; /* White text. */
+  background-color: #0057B7 !important;
+  color: #FFFFFF !important;
 }
 
-/* 6. Teks & Typography */
-/* Titles (h1-h2): Black or dark blue. Regular text: Black. Links: Red or blue. */
 h1, h2 {
-  color: #000000 !important; /* Black (or #0057B7 for dark blue). */
+  color: #000000 !important;
 }
 
-p, span, div {
-  color: #000000 !important; /* Black regular text. */
-}
-
-a {
-  color: #E60026 !important; /* Red links (or #0057B7 for blue). */
-}
-
-/* Additional Overrides for Responsiveness */
-/* Basic mobile adjustments to prevent layout issues. */
 @media (max-width: 768px) {
   .sidebar {
-    background-color: #0057B7 !important; /* Ensure sidebar color holds on mobile. */
+    background-color: #0057B7 !important;
   }
   .table, .list {
-    font-size: 14px !important; /* Smaller text for readability. */
+    font-size: 14px !important;
   }
 }
