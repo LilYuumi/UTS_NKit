@@ -118,6 +118,18 @@ class Barang extends Database {
         }
         return $data;
     }
+    
+    public function deleteBarang($id) {
+        $query = "DELETE FROM tb_barang WHERE id_barang = ?";
+        $stmt = $this->conn->prepare($query);
+        if(!$stmt) return false;
+    
+        $stmt->bind_param("i", $id);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+    
 
     
 
